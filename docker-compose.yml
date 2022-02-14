@@ -1,0 +1,26 @@
+version: "3.8"
+networks:
+    traefik-network:
+        name: ${NETWORK_NAME}
+        external: true
+
+services:
+  app:
+    build: .
+    #command: python app.py
+    #ports:
+    #  - "5000:5000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME}.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.${PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.services.${PROJECT_NAME}.loadbalancer.server.port=5000"
+      - "traefik.http.routers.${PROJECT_NAME}.service=${PROJECT_NAME}"
+      - "traefik.http.routers.${PROJECT_NAME}.tls.certresolver=apiresolver"
+      - "traefik.docker.network=${NETWORK_NAME}"
+      #- "traefik.port=5000"
+    command: gunicorn -w 1 -b :5000 app:app
+    volumes:
+      - .:/python-flask
+    networks:
+      - traefik-network
