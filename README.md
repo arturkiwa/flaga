@@ -1,7 +1,7 @@
-#FLAGA Docker implementation
+# FLAGA Docker implementation
 
-##1. Instalation prerequisites
-####a) Docker environment - Ubuntu 18 and Ubuntu 20
+## 1. Instalation prerequisites
+#### a) Docker environment - Ubuntu 18 and Ubuntu 20
 ``sudo apt update``
 
 ``sudo apt install apt-transport-https ca-certificates curl software-properties-common``
